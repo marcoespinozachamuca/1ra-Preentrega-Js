@@ -7,10 +7,26 @@ function inicializarLocalStorage() {
     if (!localStorage.getItem("puntuacion")) {
         localStorage.setItem("puntuacion", 0);
     }
+    if (!localStorage.getItem("nombreUsuario")) {
+        solicitarNombreUsuario();
+    } else {
+        alert(`¡Hola, ${localStorage.getItem("nombreUsuario")}! Bienvenido/a de nuevo.`);
+    }
     console.log("LocalStorage inicializado: ", {
         triviaCompletada: localStorage.getItem("triviaCompletada"),
-        puntuacion: localStorage.getItem("puntuacion")
+        puntuacion: localStorage.getItem("puntuacion"),
+        nombreUsuario: localStorage.getItem("nombreUsuario")
     });
+}
+
+// Función para solicitar el nombre del usuario
+function solicitarNombreUsuario() {
+    let nombreUsuario = prompt("¡Bienvenido/a! Por favor, ingresa tu nombre:");
+    while (!nombreUsuario || nombreUsuario.trim() === "") {
+        nombreUsuario = prompt("El nombre no puede estar vacío. Por favor, ingresa tu nombre:");
+    }
+    localStorage.setItem("nombreUsuario", nombreUsuario.trim());
+    alert(`¡Gracias, ${nombreUsuario.trim()}! Ahora puedes disfrutar de la trivia.`);
 }
 
 // Reiniciar progreso de LocalStorage
@@ -87,11 +103,13 @@ const preguntas = [
         opciones: ["Gracias Totales", "Adiós", "Mereces lo que sueñas"],
         respuestaCorrecta: "Gracias Totales"
     }
+    // ... Incluye las otras 10 preguntas de la trivia aquí
 ];
 
 // Función principal para ejecutar la trivia
 function iniciarTrivia() {
-    alert("Bienvenido/a a la trivia de Gustavo Cerati. ¡Pon a prueba tus conocimientos!");
+    const nombreUsuario = localStorage.getItem("nombreUsuario") || "Usuario";
+    alert(`Hola, ${nombreUsuario}. ¡Bienvenido/a a la trivia de Gustavo Cerati!`);
 
     let puntuacion = 0;
 
